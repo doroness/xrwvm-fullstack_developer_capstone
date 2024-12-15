@@ -7,10 +7,9 @@ img{
   border: rgb(103, 102, 105) 3px solid;
   display: flex;  
   flex-direction: column;
-  margin-left:5%;
-  margin-right:5%;
   margin-top: 1%;
   margin-bottom: 1%;
+  box-sizing: content-box;
 }
 
 .row{
@@ -33,12 +32,14 @@ img{
 }
 
 .title{
-  font-size: 20px;
-  background-color: rgb(97, 64, 128);
+  font-size: 18px;
+  background-color: #000;
   color: white;
   text-align: center;
-  margin:20px;
+  margin:10px 0;
   padding:5px;
+  display: block;
+  width: 100%;
 }
 
 .homepage_links{
