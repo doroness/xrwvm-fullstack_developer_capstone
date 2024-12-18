@@ -25,21 +25,31 @@ const Dealer = () => {
   let post_review = root_url+`postreview/${id}`;
   
   const get_dealer = async ()=>{
+
     const res = await fetch(dealer_url, {
       method: "GET"
     });
+
     const retobj = await res.json();
+
+      console.log(retobj.dealer);
     
     if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
-      setDealer(dealerobjs[0])
+      
+      let dealerobjs = retobj.dealer;
+
+      console.log(dealerobjs)
+      
+      setDealer(dealerobjs)
     }
   }
 
   const get_reviews = async ()=>{
+
     const res = await fetch(reviews_url, {
       method: "GET"
     });
+
     const retobj = await res.json();
     
     if(retobj.status === 200) {

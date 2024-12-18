@@ -106,29 +106,55 @@ def get_dealer_reviews(request, dealer_id):
     # if dealer id has been provided
     if(dealer_id):
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+
         reviews = get_request(endpoint)
+
+        #print(reviews)
+
         for review_detail in reviews:
+
             response = analyze_review_sentiments(review_detail['review'])
+
+            print('Analyze Response:----->')
+
             print(response)
+            
             review_detail['sentiment'] = response['sentiment']
+            
         return JsonResponse({"status":200,"reviews":reviews})
+        
     else:
         return JsonResponse({"status":400,"message":"Bad Request"})
 
 def get_dealer_details(request, dealer_id):
     if(dealer_id):
+        
         endpoint = "/fetchDealer/"+str(dealer_id)
+
+        print("fetchDealer Endpoint" + endpoint)
+
         dealership = get_request(endpoint)
         return JsonResponse({"status":200,"dealer":dealership})
     else:
         return JsonResponse({"status":400,"message":"Bad Request"})
         
 def add_review(request):
+
+    print(request)
+
     if(request.user.is_anonymous == False):
-        data = json.loads(request.body)
+        if not request.body:
+            return JsonResponse({"error": "Empty request body"}, status=400)
+
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+           return JsonResponse({"error": "Invalid JSON"}, status=400)
+
         try:
             response = post_review(data)
             return JsonResponse({"status":200})
+            
         except:
             return JsonResponse({"status":401,"message":"Error in posting review"})
     else:
