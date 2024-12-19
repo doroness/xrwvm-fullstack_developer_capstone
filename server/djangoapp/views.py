@@ -140,8 +140,6 @@ def get_dealer_details(request, dealer_id):
         
 def add_review(request):
 
-    print(request)
-
     if(request.user.is_anonymous == False):
         if not request.body:
             return JsonResponse({"error": "Empty request body"}, status=400)
